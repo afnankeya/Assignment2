@@ -1,0 +1,43 @@
+package compilerAssignment;
+
+
+import java.util.Scanner;
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
+
+public class A {
+
+    public static void main(String[] args) throws ScriptException {
+
+        Scanner sc = new Scanner(System.in);
+
+        int m = Integer.parseInt(sc.nextLine());
+        String variable[] = new String[m];
+        for (int i = 0; i < m; i++) {
+            variable[i] = sc.nextLine();
+        }
+
+        int n = Integer.parseInt(sc.nextLine());
+        String equation[] = new String[n];
+        for (int i = 0; i < n; i++) {
+            equation[i] = sc.nextLine();
+        }
+
+        try {
+            for (int i = 0; i < n; i++) {
+                equation[i] = equation[i].replaceAll(" ", "");
+                for (int j = 0; j < m; j++) {
+                    variable[j] =variable[j].replaceAll(" ", "");
+                    String[] x = variable[j].split("=");
+                    equation[i] =equation[i].replaceAll(x[0], x[1]);
+                }
+                ScriptEngineManager mgr = new ScriptEngineManager();
+                ScriptEngine engine = mgr.getEngineByName("JavaScript");
+                System.out.println(engine.eval(equation[i]));
+            }
+        }catch(ScriptException e){
+            System.out.println("Compilation Error");
+        }
+    }
+}
